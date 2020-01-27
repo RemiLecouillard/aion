@@ -18,16 +18,21 @@ public class Main extends Application {
 
         CalendarView calendarView = new CalendarView();
 
-        Calendar birthdays = new Calendar("Birthdays");
-        Calendar holidays = new Calendar("Holidays");
+        Calendar info = new Calendar("Info");
+        Calendar elec = new Calendar("Elec");
+        Calendar chimie = new Calendar("Chimie");
 
-        birthdays.setStyle(Calendar.Style.STYLE1);
-        holidays.setStyle(Calendar.Style.STYLE2);
+        info.setStyle(Calendar.Style.STYLE1);
+        elec.setStyle(Calendar.Style.STYLE2);
+        chimie.setStyle(Calendar.Style.STYLE3);
 
-        CalendarSource myCalendarSource = new CalendarSource("My Calendars");
-        myCalendarSource.getCalendars().addAll(birthdays, holidays);
 
-        calendarView.getCalendarSources().addAll(myCalendarSource);
+        CalendarSource myCalendarSource = new CalendarSource("Students");
+        myCalendarSource.getCalendars().addAll(info, elec, chimie);
+
+        calendarView.getCalendarSources().setAll(myCalendarSource);
+
+
 
         calendarView.setRequestedTime(LocalTime.now());
 
