@@ -1,19 +1,41 @@
 plugins {
     id 'java'
     id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.7'
 }
 
 group 'org.example'
 version '1.0-SNAPSHOT'
 
-sourceCompatibility = 1.8
+sourceCompatibility = 1.11
+
+javafx {
+    version = "11"
+    modules = ['javafx.controls', 'javafx.fxml']
+}
 
 repositories {
+    jcenter()
     mavenCentral()
 }
 
+afterEvaluate {
+    run {
+        doFirst {
+            jvmArgs = [
+                    '--module-path', classpath.asPath,
+                    '--add-modules', 'javafx.fxml,javafx.controls',
+                    '--add-exports', 'javafx.base/com.sun.javafx.runtime=ALL-UNNAMED'
+            ]
+        }
+    }
+}
+
 dependencies {
+    compile "com.calendarfx:view:11.8.3"
+    compile 'de.jensd:fontawesomefx-commons:11.0'
     testCompile group: 'junit', name: 'junit', version: '4.12'
+
 }
 
 mainClassName = 'Main'
