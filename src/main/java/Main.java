@@ -1,20 +1,28 @@
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import com.calendarfx.ical.ICalRepository;
 import com.calendarfx.model.Calendar;
 import com.calendarfx.model.CalendarSource;
+import com.calendarfx.model.Entry;
+import com.calendarfx.util.LoggingDomain;
 import com.calendarfx.view.CalendarView;
 
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import net.fortuna.ical4j.util.MapTimeZoneCache;
 
 
 public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        LoggingDomain.CONFIG.info("Java version: " + System.getProperty("java.version"));
+        System.setProperty("ical4j.unfolding.relaxed", "true");
+        System.setProperty("ical4j.parsing.relaxed", "true");
+        System.setProperty("net.fortuna.ical4j.timezone.cache.impl", MapTimeZoneCache.class.getName());
 
         CalendarView calendarView = new CalendarView();
 
@@ -29,9 +37,10 @@ public class Main extends Application {
 
         CalendarSource myCalendarSource = new CalendarSource("Students");
         myCalendarSource.getCalendars().addAll(info, elec, chimie);
+        Calendar moi = ICalRepository.createWebCalendar("http://ade.ensicaen.fr:8080/jsp/custom/modules/plannings/anonymous_cal.jsp?resources=2224&projectId=4&calType=ical&nbWeeks=8",
+                "ENSI", Calendar.Style.STYLE4, myCalendarSource);
 
         calendarView.getCalendarSources().setAll(myCalendarSource);
-
 
 
         calendarView.setRequestedTime(LocalTime.now());
@@ -61,6 +70,7 @@ public class Main extends Application {
         updateTimeThread.start();
 
         Scene scene = new Scene(calendarView);
+
         primaryStage.setTitle("Calendar");
         primaryStage.setScene(scene);
         primaryStage.setWidth(1300);
