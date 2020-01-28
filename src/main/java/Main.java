@@ -40,6 +40,8 @@ public class Main extends Application {
         Calendar moi = ICalRepository.createWebCalendar("http://ade.ensicaen.fr:8080/jsp/custom/modules/plannings/anonymous_cal.jsp?resources=2224&projectId=4&calType=ical&nbWeeks=8",
                 "ENSI", Calendar.Style.STYLE4, myCalendarSource);
 
+        ICalRepository.createWebCalendar("http://ade.ensicaen.fr:8080/jsp/custom/modules/plannings/anonymous_cal.jsp?resources=2727&projectId=4&calType=ical&nbWeeks=8",
+                "Nicolas", Calendar.Style.STYLE5, myCalendarSource);
         calendarView.getCalendarSources().setAll(myCalendarSource);
 
 

@@ -7,4 +7,6 @@ public abstract class Resource {
 
     abstract String getName();
 
+    @Override
+    abstract public boolean equals(Object obj);
 }

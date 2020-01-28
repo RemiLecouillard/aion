@@ -2,35 +2,62 @@ package aion;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Date;
+import java.util.*;
 
-public class Task {
+public class Task implements Comparable<Task> {
 
-    public Task(String name, Date date, LocalTime begin, LocalTime end, Resource ... resources) {
+    private Collection<Resource> _resources;
 
+    private LocalDate _date;
+
+    private LocalTime _begin;
+
+    private LocalTime _end;
+
+    private String _name;
+
+    public Task(String name, LocalDate date, LocalTime begin, LocalTime end, Resource ... resources) {
+        _date = date;
+        _begin = begin;
+        _end = end;
+        _name = name;
+        _resources = new ArrayList<>();
+        _resources.addAll(Arrays.asList(resources));
     }
 
     public String getName() {
-        return "";
+        return _name;
     }
 
     public boolean contains(Resource r) {
-        return true;
+        return _resources.contains(r);
     }
 
     public LocalDate getStartDate() {
-        return null;
+        return _date;
     }
 
     public LocalTime getStartTime() {
-        return null;
-    }
-
-    public LocalDate getEndDate() {
-        return null;
+        return _begin;
     }
 
     public LocalTime getEndTime() {
-        return null;
+        return _end;
+    }
+
+    @Override
+    public int compareTo(Task o) {
+
+        int dif = _date.compareTo(o._date);
+
+        if (dif < 0) {
+            return -1;
+        }
+
+        if (dif > 0) {
+            return 1;
+        }
+
+        return _begin.compareTo(o._begin);
     }
 }

@@ -5,45 +5,50 @@ import com.calendarfx.model.Entry;
 import com.calendarfx.model.Interval;
 
 import java.util.Collection;
+import java.util.TreeSet;
 
-public class Planning {
+public class Planning implements PlanningInterface{
 
     private Collection<Task> tasks;
 
     private String name;
 
     Planning(String name) {
+        tasks = new TreeSet<>();
         this.name = name;
-
     }
 
-    void addClass(Task entry) {
-        tasks.add(entry);
+    @Override
+    public void addTask(Task task) {
+        tasks.add(task);
     }
 
-    Planning getPlanningForResource(Resource r) {
+    @Override
+    public Planning getPlanningForResource(Resource r) {
         Planning p = new Planning(r.getName());
         for (Task c : tasks) {
             if (c.contains(r)) {
-                p.addClass(c);
+                p.addTask(c);
             }
         }
 
         return p;
     }
 
-    Calendar getCalendar() {
+    @Override
+    public Calendar getCalendar() {
         Calendar calendar = new Calendar(this.name);
         for (Task c : tasks) {
             Entry<?> e = new Entry(c.getName());
-            e.setInterval(new Interval(c.getStartDate(), c.getStartTime(), c.getEndDate(), c.getEndTime()));
+            e.setInterval(new Interval(c.getStartDate(), c.getStartTime(), c.getStartDate(), c.getEndTime()));
             calendar.addEntry(e);
         }
 
         return calendar;
     }
 
-    Collection<Task> getTasks() {
+    @Override
+    public Collection<Task> getAllTasks() {
         return tasks;
     }
 
