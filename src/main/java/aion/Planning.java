@@ -3,9 +3,11 @@ package aion;
 import com.calendarfx.model.Calendar;
 import com.calendarfx.model.Entry;
 import com.calendarfx.model.Interval;
+import org.optaplanner.core.api.domain.solution.PlanningSolution;
 
 import java.util.Collection;
 
+@PlanningSolution
 public class Planning {
 
     private Collection<Task> tasks;
